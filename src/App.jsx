@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Header } from './Components/Header';
 import { Home } from './Home';
-import { Thread } from './Components/thread/index';
-import { ThreadNew } from './Components/thread/new';
+import { Thread } from './Components/threads/index';
+import { ThreadNew } from './Components/threads/new';
+import { Post } from './Components/threads/post';
+import { NoMatch } from './nomatch';
 
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
     fetch("https://railway.bulletinboard.techtrain.dev/threads")
     .then(res => res.json())
     .then(data => {setThreads(data)})
-    .catch(() => alert("error"))  
+    .catch(() => {alert("error")})  
     }, []
   );
 
@@ -22,18 +24,46 @@ function App() {
 
   return (
     <>
-      <Header clickButton={() => {clickButton("Components/thread/new")}} />
+      <Header clickButton={() => {clickButton("Components/threads/new")}} />
 
-      <Link to="/">HOME</Link>
-      <br />
-      <Link to="/Components/thread">THREAD</Link>
-      <br />
-      <Link to="/Components/thread/new">CREATETHREAD</Link>
+      <div className='bg-slate-300'>
+        <NavLink
+          style={({ isActive }) => (isActive ? { color: 'blue' } : undefined)}
+          to="/"
+        >
+          Home
+        </NavLink>
+        <br />
+        <NavLink
+          style={({ isActive }) => (isActive ? { color: 'blue' } : undefined)}
+          to="/Components/threads"
+        >
+          Thread
+        </NavLink>
+        <br />
+        <NavLink
+          style={({ isActive }) => (isActive ? { color: 'blue' } : undefined)}
+          to="/Components/threads/post"
+        >
+          post
+        </NavLink>
+        <br />
+        <NavLink
+          style={({ isActive }) => (isActive ? { color: 'blue' } : undefined)}
+          to="/Components/threads/new"
+        >
+          ThreadNew
+        </NavLink>
+      </div>
+      
 
       <Routes>
         <Route path="/" element={<Home threads={threads} />} /> 
-        <Route path="/Components/thread" element={<Thread />} /> 
-        <Route path="/Components/thread/new" element={<ThreadNew />} /> 
+        <Route path="/Components/threads" element={<Thread />} >
+          <Route path=':postId' element={<Post />} />
+        </Route>
+        <Route path="/Components/threads/new" element={<ThreadNew />} />
+        <Route path="*" element={<NoMatch />}></Route>
       </Routes>
 
     </>

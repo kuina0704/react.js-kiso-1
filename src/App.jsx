@@ -60,7 +60,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home threads={threads} />} /> 
         <Route path="/Components/threads" element={<Thread />} >
-          <Route path=':postId' element={<Post />} />
+          <Route path=':postId' element={<Post/>} />
         </Route>
         <Route path="/Components/threads/new" element={<ThreadNew />} />
         <Route path="*" element={<NoMatch />}></Route>

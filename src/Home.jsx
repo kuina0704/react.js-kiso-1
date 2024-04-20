@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 // 今、思いついたのですが、Linkタグでprops渡せる？
 // 面談までに間に合えばコード書いてみます！
 
+// 質問２→自己解決しました
+// useLocationというキーワードにたどり着き実装できました
+
 export const Home = (props) => {
     const {threads} = props;
 
@@ -15,7 +18,7 @@ export const Home = (props) => {
                 <h2>新着スレッド</h2>
                 <ul>
                     { threads.map((thread, index) => (
-                        <Link to={`/Components/threads/${index+1}`} key={thread.id} >
+                        <Link to={`/Components/threads/${index+1}`} key={thread.id} state={thread.title}>
                             <li>{index+1}</li>
                             <li className='bg-white border border-gray-950 p-1 m-1'>{thread.title}</li>
                         </Link>

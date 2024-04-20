@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+
 
 export const Post = () => {
     const {postId} = useParams();
-
+    const { state } = useLocation();
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -27,6 +28,7 @@ export const Post = () => {
     return(
         <>
             <h2>{posts.threadId}</h2>
+            <h2>{state}</h2>
             <ul>
                 { Object.keys(posts).map((key) => (
                     <li className='bg-white border border-gray-950 p-1 m-1'>{posts[key]}</li>
